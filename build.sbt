@@ -17,8 +17,9 @@ licenses := Seq(("Apache License, Version 2.0", url("http://www.apache.org/licen
 /**
   * Scala:
   */
-scalaVersion := "2.11.7"
-crossVersion := CrossVersion.binary
+scalaVersion       := "2.11.7"
+crossScalaVersions := Seq("2.10.6", "2.11.7")
+crossVersion       := CrossVersion.binary
 
 /**
   * Library Dependencies:
@@ -60,6 +61,48 @@ ScalariformKeys.preferences := FormattingPreferences()
   .setPreference(AlignSingleLineCaseStatements, true)
   .setPreference(SpacesAroundMultiImports, true)
 
-// TODO: sbt-pgp Publisihng.
+/**
+  * Publishing to Sonatype:
+  */
+publishMavenStyle := true
 
-// TODO: sbt-release Releasing.
+publishTo := {
+  val nexus = "https://oss.sonatype.org/"
+  if (isSnapshot.value)
+    Some("snapshots" at nexus + "content/repositories/snapshots")
+  else
+    Some("releases" at nexus + "service/local/staging/deploy/maven2")
+}
+
+pomExtra := {
+  <url>https://github.com/jparkie/Spark2Elasticsearch</url>
+  <scm>
+    <url>git@github.com:jparkie/Spark2Elasticsearch.git</url>
+    <connection>scm:git:git@github.com:jparkie/Spark2Elasticsearch.git</connection>
+  </scm>
+  <developers>
+    <developer>
+      <id>jparkie</id>
+      <name>Jacob Park</name>
+      <url>https://github.com/jparkie</url>
+    </developer>
+  </developers>
+}
+
+/**
+  * Release:
+  */
+import ReleaseTransformations._
+
+releaseProcess := Seq[ReleaseStep](
+  checkSnapshotDependencies,
+  inquireVersions,
+  runTest,
+  setReleaseVersion,
+  commitReleaseVersion,
+  tagRelease,
+  publishArtifacts,
+  setNextVersion,
+  commitNextVersion,
+  pushChanges
+)
