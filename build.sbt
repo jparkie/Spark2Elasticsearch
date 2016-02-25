@@ -33,7 +33,7 @@ val sparkNetworkCommonRule = ExclusionRule("org.apache.spark", "spark-network-co
 val SparkVersion         = "1.4.1"
 val SparkTestVersion     = "1.4.1_0.3.0"
 val ScalaTestVersion     = "2.2.4"
-val ElasticsearchVersion = "2.2.0"
+val ElasticsearchVersion = "2.0.2"
 val Slf4jVersion         = "1.7.10"
 
 // Dependencies:
