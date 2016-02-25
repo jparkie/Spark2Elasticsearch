@@ -1,7 +1,7 @@
 package com.github.jparkie.spark.elasticsearch.transport
 
 import com.github.jparkie.spark.elasticsearch.util.SparkEsException
-import org.scalatest.{MustMatchers, WordSpec}
+import org.scalatest.{ MustMatchers, WordSpec }
 
 class SparkEsTransportClientProxySpec extends WordSpec with MustMatchers {
   "SparkEsTransportClientProxy" must {

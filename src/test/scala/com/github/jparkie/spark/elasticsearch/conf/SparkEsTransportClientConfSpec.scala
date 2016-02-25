@@ -3,7 +3,7 @@ package com.github.jparkie.spark.elasticsearch.conf
 import java.net.InetSocketAddress
 
 import org.apache.spark.SparkConf
-import org.scalatest.{MustMatchers, WordSpec}
+import org.scalatest.{ MustMatchers, WordSpec }
 
 class SparkEsTransportClientConfSpec extends WordSpec with MustMatchers {
   "SparkEsTransportClientConf" must {

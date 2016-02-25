@@ -2,7 +2,7 @@ package com.github.jparkie.spark.elasticsearch.sql
 
 import com.holdenkarau.spark.testing.SharedSparkContext
 import org.apache.spark.sql.SQLContext
-import org.scalatest.{MustMatchers, WordSpec}
+import org.scalatest.{ MustMatchers, WordSpec }
 
 class PackageSpec extends WordSpec with MustMatchers with SharedSparkContext {
   "Package com.github.jparkie.spark.elasticsearch.sql" must {

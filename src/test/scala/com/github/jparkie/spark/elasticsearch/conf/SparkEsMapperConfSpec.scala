@@ -1,7 +1,7 @@
 package com.github.jparkie.spark.elasticsearch.conf
 
 import org.apache.spark.SparkConf
-import org.scalatest.{MustMatchers, WordSpec}
+import org.scalatest.{ MustMatchers, WordSpec }
 
 class SparkEsMapperConfSpec extends WordSpec with MustMatchers {
   "SparkEsMapperConf" must {
@@ -21,7 +21,7 @@ class SparkEsMapperConfSpec extends WordSpec with MustMatchers {
         esMappingVersion = Some("TEST_VALUE_3"),
         esMappingVersionType = Some("TEST_VALUE_4"),
         esMappingRouting = Some("TEST_VALUE_5"),
-        esMappingTTLInMillis =  Some("TEST_VALUE_6"),
+        esMappingTTLInMillis = Some("TEST_VALUE_6"),
         esMappingTimestamp = Some("TEST_VALUE_7")
       )
 

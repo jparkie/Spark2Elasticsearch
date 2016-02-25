@@ -1,7 +1,7 @@
 package com.github.jparkie.spark.elasticsearch.conf
 
 import org.apache.spark.SparkConf
-import org.scalatest.{MustMatchers, WordSpec}
+import org.scalatest.{ MustMatchers, WordSpec }
 
 class SparkEsWriteConfSpec extends WordSpec with MustMatchers {
   "SparkEsWriteConf" must {

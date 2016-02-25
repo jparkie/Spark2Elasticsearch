@@ -1,11 +1,11 @@
 package com.github.jparkie.spark.elasticsearch
 
-import com.github.jparkie.spark.elasticsearch.conf.{SparkEsMapperConf, SparkEsWriteConf}
-import com.github.jparkie.spark.elasticsearch.sql.{SparkEsDataFrameMapper, SparkEsDataFrameSerializer}
+import com.github.jparkie.spark.elasticsearch.conf.{ SparkEsMapperConf, SparkEsWriteConf }
+import com.github.jparkie.spark.elasticsearch.sql.{ SparkEsDataFrameMapper, SparkEsDataFrameSerializer }
 import com.holdenkarau.spark.testing.SharedSparkContext
-import org.apache.spark.sql.types.{LongType, StringType, StructField, StructType}
-import org.apache.spark.sql.{Row, SQLContext}
-import org.scalatest.{MustMatchers, WordSpec}
+import org.apache.spark.sql.types.{ LongType, StringType, StructField, StructType }
+import org.apache.spark.sql.{ Row, SQLContext }
+import org.scalatest.{ MustMatchers, WordSpec }
 
 class SparkEsBulkWriterSpec extends WordSpec with MustMatchers with SharedSparkContext {
   val esServer = new ElasticSearchServer()

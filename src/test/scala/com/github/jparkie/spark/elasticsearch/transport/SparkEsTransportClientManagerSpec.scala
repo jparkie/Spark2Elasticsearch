@@ -1,7 +1,7 @@
 package com.github.jparkie.spark.elasticsearch.transport
 
 import com.github.jparkie.spark.elasticsearch.conf.SparkEsTransportClientConf
-import org.scalatest.{MustMatchers, WordSpec}
+import org.scalatest.{ MustMatchers, WordSpec }
 
 class SparkEsTransportClientManagerSpec extends WordSpec with MustMatchers {
   "SparkEsTransportClientManager" must {

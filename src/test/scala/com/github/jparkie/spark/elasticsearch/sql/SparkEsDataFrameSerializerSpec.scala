@@ -1,12 +1,12 @@
 package com.github.jparkie.spark.elasticsearch.sql
 
-import java.sql.{Date, Timestamp}
+import java.sql.{ Date, Timestamp }
 
 import com.holdenkarau.spark.testing.SharedSparkContext
 import org.apache.spark.sql.types._
-import org.apache.spark.sql.{Row, SQLContext}
+import org.apache.spark.sql.{ Row, SQLContext }
 import org.elasticsearch.common.xcontent.XContentFactory
-import org.scalatest.{MustMatchers, WordSpec}
+import org.scalatest.{ MustMatchers, WordSpec }
 
 class SparkEsDataFrameSerializerSpec extends WordSpec with MustMatchers with SharedSparkContext {
   "SparkEsDataFrameSerializer" must {

@@ -3,10 +3,10 @@ package com.github.jparkie.spark.elasticsearch.sql
 import com.github.jparkie.spark.elasticsearch.conf.SparkEsMapperConf
 import com.holdenkarau.spark.testing.SharedSparkContext
 import org.apache.spark.SparkContext
-import org.apache.spark.sql.types.{LongType, StringType, StructField, StructType}
-import org.apache.spark.sql.{Row, SQLContext}
+import org.apache.spark.sql.types.{ LongType, StringType, StructField, StructType }
+import org.apache.spark.sql.{ Row, SQLContext }
 import org.elasticsearch.index.VersionType
-import org.scalatest.{MustMatchers, WordSpec}
+import org.scalatest.{ MustMatchers, WordSpec }
 
 class SparkEsDataFrameMapperSpec extends WordSpec with MustMatchers with SharedSparkContext {
   def createInputRow(sparkContext: SparkContext): Row = {
