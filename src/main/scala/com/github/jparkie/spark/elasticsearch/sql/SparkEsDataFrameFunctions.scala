@@ -37,8 +37,8 @@ class SparkEsDataFrameFunctions(dataFrame: DataFrame) extends Serializable {
       esIndex = esIndex,
       esType = esType,
       esClient = () => sparkEsTransportClientManager.getTransportClient(sparkEsTransportClientConf),
-      sparkEsSerializer = () => new SparkEsDataFrameSerializer(dataFrame.schema),
-      sparkEsMapper = () => new SparkEsDataFrameMapper(sparkEsMapperConf),
+      sparkEsSerializer = new SparkEsDataFrameSerializer(dataFrame.schema),
+      sparkEsMapper = new SparkEsDataFrameMapper(sparkEsMapperConf),
       sparkEsWriteConf = sparkEsWriteConf
     )
 

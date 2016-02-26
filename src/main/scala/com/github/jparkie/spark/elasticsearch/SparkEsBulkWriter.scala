@@ -14,8 +14,8 @@ class SparkEsBulkWriter[T](
   esIndex:           String,
   esType:            String,
   esClient:          () => Client,
-  sparkEsSerializer: () => SparkEsSerializer[T],
-  sparkEsMapper:     () => SparkEsMapper[T],
+  sparkEsSerializer: SparkEsSerializer[T],
+  sparkEsMapper:     SparkEsMapper[T],
   sparkEsWriteConf:  SparkEsWriteConf
 ) extends Serializable with Logging {
   /**
@@ -40,10 +40,6 @@ class SparkEsBulkWriter[T](
       throw new SparkEsException(failure.getMessage, failure)
     }
   }
-
-  private lazy val esSerializer = sparkEsSerializer()
-
-  private lazy val esMapper = sparkEsMapper()
 
   private[elasticsearch] def logDuration(closure: () => Unit): Unit = {
     val localStartTime = System.nanoTime()
@@ -87,16 +83,16 @@ class SparkEsBulkWriter[T](
 
     for (currentRow <- data) {
       val currentIndexRequest = new IndexRequest(esIndex, esType) source {
-        esSerializer.write(currentRow)
+        sparkEsSerializer.write(currentRow)
       }
 
-      esMapper.extractMappingId(currentRow).foreach(currentIndexRequest.id)
-      esMapper.extractMappingParent(currentRow).foreach(currentIndexRequest.parent)
-      esMapper.extractMappingVersion(currentRow).foreach(currentIndexRequest.version)
-      esMapper.extractMappingVersionType(currentRow).foreach(currentIndexRequest.versionType)
-      esMapper.extractMappingRouting(currentRow).foreach(currentIndexRequest.routing)
-      esMapper.extractMappingTTLInMillis(currentRow).foreach(currentIndexRequest.ttl(_))
-      esMapper.extractMappingTimestamp(currentRow).foreach(currentIndexRequest.timestamp)
+      sparkEsMapper.extractMappingId(currentRow).foreach(currentIndexRequest.id)
+      sparkEsMapper.extractMappingParent(currentRow).foreach(currentIndexRequest.parent)
+      sparkEsMapper.extractMappingVersion(currentRow).foreach(currentIndexRequest.version)
+      sparkEsMapper.extractMappingVersionType(currentRow).foreach(currentIndexRequest.versionType)
+      sparkEsMapper.extractMappingRouting(currentRow).foreach(currentIndexRequest.routing)
+      sparkEsMapper.extractMappingTTLInMillis(currentRow).foreach(currentIndexRequest.ttl(_))
+      sparkEsMapper.extractMappingTimestamp(currentRow).foreach(currentIndexRequest.timestamp)
 
       esBulkProcessor.add(currentIndexRequest)
     }

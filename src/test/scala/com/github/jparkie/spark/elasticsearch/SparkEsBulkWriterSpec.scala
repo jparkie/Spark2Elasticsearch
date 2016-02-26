@@ -74,8 +74,8 @@ class SparkEsBulkWriterSpec extends WordSpec with MustMatchers with SharedSparkC
         esIndex = "test_index",
         esType = "test_type",
         esClient = () => esServer.client,
-        sparkEsSerializer = () => new SparkEsDataFrameSerializer(inputSchema),
-        sparkEsMapper = () => new SparkEsDataFrameMapper(inputMapperConf),
+        sparkEsSerializer = new SparkEsDataFrameSerializer(inputSchema),
+        sparkEsMapper = new SparkEsDataFrameMapper(inputMapperConf),
         sparkEsWriteConf = inputSparkEsWriteConf
       )
 
