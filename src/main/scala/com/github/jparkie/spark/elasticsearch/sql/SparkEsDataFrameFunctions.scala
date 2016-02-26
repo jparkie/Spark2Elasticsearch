@@ -11,8 +11,6 @@ import org.apache.spark.sql.{ DataFrame, Row }
  * @param dataFrame The DataFrame to lift into extension.
  */
 class SparkEsDataFrameFunctions(dataFrame: DataFrame) extends Serializable {
-  implicit private[sql] val internalSparkEsTransportClientManager = SparkEsTransportClientManager
-
   /**
    * SparkContext to schedule SparkEsWriter Tasks.
    */
@@ -34,7 +32,7 @@ class SparkEsDataFrameFunctions(dataFrame: DataFrame) extends Serializable {
     sparkEsTransportClientConf: SparkEsTransportClientConf = SparkEsTransportClientConf.fromSparkConf(sparkContext.getConf),
     sparkEsMapperConf:          SparkEsMapperConf          = SparkEsMapperConf.fromSparkConf(sparkContext.getConf),
     sparkEsWriteConf:           SparkEsWriteConf           = SparkEsWriteConf.fromSparkConf(sparkContext.getConf)
-  )(implicit sparkEsTransportClientManager: SparkEsTransportClientManager): Unit = {
+  )(implicit sparkEsTransportClientManager: SparkEsTransportClientManager = sparkEsTransportClientManager): Unit = {
     val sparkEsWriter = new SparkEsBulkWriter[Row](
       esIndex = esIndex,
       esType = esType,
