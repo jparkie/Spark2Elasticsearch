@@ -61,6 +61,11 @@ ScalariformKeys.preferences := FormattingPreferences()
   .setPreference(SpacesAroundMultiImports, true)
 
 /**
+  * Scoverage:
+  */
+coverageEnabled := true
+
+/**
   * Publishing to Sonatype:
   */
 publishMavenStyle := true
