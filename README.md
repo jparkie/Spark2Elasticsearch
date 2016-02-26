@@ -2,6 +2,8 @@
 
 Spark Library for Bulk Loading into Elasticsearch
 
+[![Build Status](https://travis-ci.org/jparkie/Spark2Elasticsearch.svg?branch=master)](https://travis-ci.org/jparkie/Spark2Elasticsearch)
+
 ## Requirements
 
 Spark2Elasticsearch supports Spark 1.4 and above.
