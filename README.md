@@ -6,16 +6,31 @@ Spark Library for Bulk Loading into Elasticsearch
 
 Spark2Elasticsearch supports Spark 1.4 and above.
 
+| Spark2Elasticsearch Version | Elasticsearch Version |
+| --------------------------- | --------------------- |
+| `2.0.X`                     | `2.0.X`               |
+
 ## Downloads
 
-Currently, Spark2Elasticsearch is unavailable.
+#### SBT
+```scala
+libraryDependencies += "com.github.jparkie" %% "spark2elasticsearch" % "2.0.0-SNAPSHOT"
+```
+
+#### Maven
+```xml
+<dependency>
+  <groupId>com.github.jparkie</groupId>
+  <artifactId>spark2elasticsearch_2.10</artifactId>
+  <version>2.0.0-SNAPSHOT</version>
+</dependency>
+```
 
 It is planned for Spark2Elasticsearch to be available on the following:
-- https://oss.sonatype.org/content/repositories/releases/
 - http://spark-packages.org/
 
 ## Features
-- Utilizes Elasticsearch Java API with a `TransportClient` to bulk load data a `DataFrame` into Elasticsearch.
+- Utilizes Elasticsearch Java API with a `TransportClient` to bulk load data from a `DataFrame` into Elasticsearch.
 
 ## Usage
 
