@@ -11,12 +11,19 @@ Spark2Elasticsearch supports Spark 1.4 and above.
 | Spark2Elasticsearch Version | Elasticsearch Version |
 | --------------------------- | --------------------- |
 | `2.0.X`                     | `2.0.X`               |
+| `2.1.X`                     | `2.1.X`               |
 
 ## Downloads
 
 #### SBT
 ```scala
 libraryDependencies += "com.github.jparkie" %% "spark2elasticsearch" % "2.0.0-SNAPSHOT"
+```
+
+Or:
+
+```scala
+libraryDependencies += "com.github.jparkie" %% "spark2elasticsearch" % "2.1.0-SNAPSHOT"
 ```
 
 Add the following resolver if needed:
