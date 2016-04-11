@@ -100,6 +100,8 @@ pomExtra := {
   */
 import ReleaseTransformations._
 
+releasePublishArtifactsAction := PgpKeys.publishSigned.value
+
 releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,
   inquireVersions,
