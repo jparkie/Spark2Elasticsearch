@@ -82,25 +82,29 @@ object SparkEsTransportClientConf {
    * @return A SparkEsTransportClientConf from a SparkConf.
    */
   def fromSparkConf(sparkConf: SparkConf): SparkEsTransportClientConf = {
-    require(
-      sparkConf.contains(ES_NODES.name),
-      s"""Property ${ES_NODES.name} is not provided in SparkConf.""".stripMargin
-    )
-
-    val tempEsNodes = sparkConf.get(ES_NODES.name).split(",")
-    val tempEsPort = sparkConf.getInt(ES_PORT.name, ES_PORT.default)
+    val tempEsNodes = ES_NODES.fromConf(sparkConf)((sc, name) => sc.get(name).split(","))
+    val tempEsPort = ES_PORT.fromConf(sparkConf)((sc, name) => sc.getInt(name, ES_PORT.default))
     val tempSettings = mutable.HashMap.empty[String, String]
 
-    if (sparkConf.contains(ES_CLUSTER_NAME.name))
-      tempSettings.put(CONFIG_CLUSTER_NAME, sparkConf.get(ES_CLUSTER_NAME.name))
-    if (sparkConf.contains(ES_CLIENT_TRANSPORT_SNIFF.name))
-      tempSettings.put(CONFIG_CLIENT_TRANSPORT_SNIFF, sparkConf.get(ES_CLIENT_TRANSPORT_SNIFF.name))
-    if (sparkConf.contains(ES_CLIENT_TRANSPORT_IGNORE_CLUSTER_NAME.name))
-      tempSettings.put(CONFIG_CLIENT_TRANSPORT_IGNORE_CLUSTER_NAME, sparkConf.get(ES_CLIENT_TRANSPORT_IGNORE_CLUSTER_NAME.name))
-    if (sparkConf.contains(ES_CLIENT_TRANSPORT_PING_TIMEOUT.name))
-      tempSettings.put(CONFIG_CLIENT_TRANSPORT_PING_TIMEOUT, sparkConf.get(ES_CLIENT_TRANSPORT_PING_TIMEOUT.name))
-    if (sparkConf.contains(ES_CLIENT_TRANSPORT_NODES_SAMPLER_INTERVAL.name))
-      tempSettings.put(CONFIG_CLIENT_TRANSPORT_NODES_SAMPLER_INTERVAL, sparkConf.get(ES_CLIENT_TRANSPORT_NODES_SAMPLER_INTERVAL.name))
+    require(
+      tempEsNodes.nonEmpty,
+      s"""No nodes defined in property ${ES_NODES.name} is in SparkConf.""".stripMargin
+    )
+
+    if (sparkConf.contains(ES_CLUSTER_NAME.name) || sparkConf.contains(s"spark.${ES_CLUSTER_NAME.name}"))
+      tempSettings.put(CONFIG_CLUSTER_NAME, ES_CLUSTER_NAME.fromConf(sparkConf)((sc, name) => sc.get(name)))
+
+    if (sparkConf.contains(ES_CLIENT_TRANSPORT_SNIFF.name) || sparkConf.contains(s"spark.${ES_CLIENT_TRANSPORT_SNIFF.name}"))
+      tempSettings.put(CONFIG_CLIENT_TRANSPORT_SNIFF, ES_CLIENT_TRANSPORT_SNIFF.fromConf(sparkConf)((sc, name) => sc.get(name)))
+
+    if (sparkConf.contains(ES_CLIENT_TRANSPORT_IGNORE_CLUSTER_NAME.name) || sparkConf.contains(s"spark.${ES_CLIENT_TRANSPORT_IGNORE_CLUSTER_NAME.name}"))
+      tempSettings.put(CONFIG_CLIENT_TRANSPORT_IGNORE_CLUSTER_NAME, ES_CLIENT_TRANSPORT_IGNORE_CLUSTER_NAME.fromConf(sparkConf)((sc, name) => sc.get(name)))
+
+    if (sparkConf.contains(ES_CLIENT_TRANSPORT_PING_TIMEOUT.name) || sparkConf.contains(s"spark.${ES_CLIENT_TRANSPORT_PING_TIMEOUT.name}"))
+      tempSettings.put(CONFIG_CLIENT_TRANSPORT_PING_TIMEOUT, ES_CLIENT_TRANSPORT_PING_TIMEOUT.fromConf(sparkConf)((sc, name) => sc.get(name)))
+
+    if (sparkConf.contains(ES_CLIENT_TRANSPORT_NODES_SAMPLER_INTERVAL.name) || sparkConf.contains(s"spark.${ES_CLIENT_TRANSPORT_NODES_SAMPLER_INTERVAL.name}"))
+      tempSettings.put(CONFIG_CLIENT_TRANSPORT_NODES_SAMPLER_INTERVAL, ES_CLIENT_TRANSPORT_NODES_SAMPLER_INTERVAL.fromConf(sparkConf)((sc, name) => sc.get(name)))
 
     SparkEsTransportClientConf(
       transportAddresses = tempEsNodes,

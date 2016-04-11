@@ -73,13 +73,13 @@ object SparkEsMapperConf {
    */
   def fromSparkConf(sparkConf: SparkConf): SparkEsMapperConf = {
     SparkEsMapperConf(
-      esMappingId = sparkConf.getOption(ES_MAPPING_ID.name),
-      esMappingParent = sparkConf.getOption(ES_MAPPING_PARENT.name),
-      esMappingVersion = sparkConf.getOption(ES_MAPPING_VERSION.name),
-      esMappingVersionType = sparkConf.getOption(ES_MAPPING_VERSION_TYPE.name),
-      esMappingRouting = sparkConf.getOption(ES_MAPPING_ROUTING.name),
-      esMappingTTLInMillis = sparkConf.getOption(ES_MAPPING_TTL_IN_MILLIS.name),
-      esMappingTimestamp = sparkConf.getOption(ES_MAPPING_TIMESTAMP.name)
+      esMappingId = ES_MAPPING_ID.fromConf(sparkConf)((sc, name) => sc.getOption(name)),
+      esMappingParent = ES_MAPPING_PARENT.fromConf(sparkConf)((sc, name) => sc.getOption(name)),
+      esMappingVersion = ES_MAPPING_VERSION.fromConf(sparkConf)((sc, name) => sc.getOption(name)),
+      esMappingVersionType = ES_MAPPING_VERSION_TYPE.fromConf(sparkConf)((sc, name) => sc.getOption(name)),
+      esMappingRouting = ES_MAPPING_ROUTING.fromConf(sparkConf)((sc, name) => sc.getOption(name)),
+      esMappingTTLInMillis = ES_MAPPING_TTL_IN_MILLIS.fromConf(sparkConf)((sc, name) => sc.getOption(name)),
+      esMappingTimestamp = ES_MAPPING_TIMESTAMP.fromConf(sparkConf)((sc, name) => sc.getOption(name))
     )
   }
 }

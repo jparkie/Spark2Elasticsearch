@@ -44,10 +44,10 @@ object SparkEsWriteConf {
    */
   def fromSparkConf(sparkConf: SparkConf): SparkEsWriteConf = {
     SparkEsWriteConf(
-      bulkActions = sparkConf.getInt(BULK_ACTIONS.name, BULK_ACTIONS.default),
-      bulkSizeInMB = sparkConf.getInt(BULK_SIZE_IN_MB.name, BULK_SIZE_IN_MB.default),
-      concurrentRequests = sparkConf.getInt(CONCURRENT_REQUESTS.name, CONCURRENT_REQUESTS.default),
-      flushTimeoutInSeconds = sparkConf.getLong(FLUSH_TIMEOUT_IN_SECONDS.name, FLUSH_TIMEOUT_IN_SECONDS.default)
+      bulkActions = BULK_ACTIONS.fromConf(sparkConf)((sc, name) => sc.getInt(name, BULK_ACTIONS.default)),
+      bulkSizeInMB = BULK_SIZE_IN_MB.fromConf(sparkConf)((sc, name) => sc.getInt(name, BULK_SIZE_IN_MB.default)),
+      concurrentRequests = CONCURRENT_REQUESTS.fromConf(sparkConf)((sc, name) => sc.getInt(name, CONCURRENT_REQUESTS.default)),
+      flushTimeoutInSeconds = FLUSH_TIMEOUT_IN_SECONDS.fromConf(sparkConf)((sc, name) => sc.getLong(name, FLUSH_TIMEOUT_IN_SECONDS.default))
     )
   }
 }

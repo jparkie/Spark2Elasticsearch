@@ -30,7 +30,7 @@ class SparkEsTransportClientConfSpec extends WordSpec with MustMatchers {
         SparkEsTransportClientConf.fromSparkConf(inputSparkConf)
       }
 
-      outputException.getMessage must include("Property es.nodes is not provided in SparkConf.")
+      outputException.getMessage must include("No nodes defined in property es.nodes is in SparkConf.")
     }
 
     "extract transportSettings successfully" in {

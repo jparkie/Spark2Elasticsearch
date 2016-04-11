@@ -73,6 +73,8 @@ Refer to for more: [SparkEsDataFrameFunctions.scala](https://github.com/jparkie/
 
 ## Configurations
 
+When adding configurations to through spark-submit, prefix property names with `spark.`.
+
 ### SparkEsMapperConf
 
 Refer to for more: [SparkEsMapperConf.scala](https://github.com/jparkie/Spark2Elasticsearch/blob/master/src/main/scala/com/github/jparkie/spark/elasticsearch/conf/SparkEsMapperConf.scala)
