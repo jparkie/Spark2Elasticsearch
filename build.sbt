@@ -63,12 +63,14 @@ ScalariformKeys.preferences := FormattingPreferences()
 /**
   * Scoverage:
   */
-coverageEnabled := true
+coverageEnabled in Test := true
 
 /**
   * Publishing to Sonatype:
   */
 publishMavenStyle := true
+
+publishArtifact in Test := false
 
 publishTo := {
   val nexus = "https://oss.sonatype.org/"
