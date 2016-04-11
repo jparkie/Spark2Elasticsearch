@@ -17,18 +17,19 @@ Spark2Elasticsearch supports Spark 1.4 and above.
 
 #### SBT
 ```scala
-libraryDependencies += "com.github.jparkie" %% "spark2elasticsearch" % "2.0.0-SNAPSHOT"
+libraryDependencies += "com.github.jparkie" %% "spark2elasticsearch" % "2.0.0"
 ```
 
 Or:
 
 ```scala
-libraryDependencies += "com.github.jparkie" %% "spark2elasticsearch" % "2.1.0-SNAPSHOT"
+libraryDependencies += "com.github.jparkie" %% "spark2elasticsearch" % "2.1.0"
 ```
 
 Add the following resolver if needed:
 
 ```scala
+resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/releases"
 resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 ```
 
