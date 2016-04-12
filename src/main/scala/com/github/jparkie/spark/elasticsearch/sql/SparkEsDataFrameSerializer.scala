@@ -120,8 +120,8 @@ class SparkEsDataFrameSerializer(schema: StructType) extends SparkEsSerializer[R
       case LongType      => builder.value(value.asInstanceOf[Long])
       case DoubleType    => builder.value(value.asInstanceOf[Double])
       case FloatType     => builder.value(value.asInstanceOf[Float])
-      case TimestampType => builder.value(value.asInstanceOf[Timestamp])
-      case DateType      => builder.value(value.asInstanceOf[Date])
+      case TimestampType => builder.value(value.asInstanceOf[Timestamp].getTime)
+      case DateType      => builder.value(value.asInstanceOf[Date].getTime)
       case StringType    => builder.value(value.toString)
       case _ =>
         throw new IllegalArgumentException(s"Unknown DataType: $value.")
