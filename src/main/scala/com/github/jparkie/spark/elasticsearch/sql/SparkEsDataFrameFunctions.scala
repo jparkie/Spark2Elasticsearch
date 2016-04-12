@@ -17,7 +17,7 @@ class SparkEsDataFrameFunctions(dataFrame: DataFrame) extends Serializable {
   private[sql] val sparkContext = dataFrame.sqlContext.sparkContext
 
   /**
-   * Saves DataFrame into Elasticsearch with the Java API utilizing a TransportClient.
+   * Upserts DataFrame into Elasticsearch with the Java API utilizing a TransportClient.
    *
    * @param esIndex Index of DataFrame in Elasticsearch.
    * @param esType Type of DataFrame in Elasticsearch.

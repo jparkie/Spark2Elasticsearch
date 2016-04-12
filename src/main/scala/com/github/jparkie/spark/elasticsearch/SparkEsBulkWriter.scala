@@ -7,6 +7,7 @@ import com.github.jparkie.spark.elasticsearch.util.SparkEsException
 import org.apache.spark.{ Logging, TaskContext }
 import org.elasticsearch.action.bulk.{ BulkProcessor, BulkRequest, BulkResponse }
 import org.elasticsearch.action.index.IndexRequest
+import org.elasticsearch.action.update.UpdateRequest
 import org.elasticsearch.client.Client
 import org.elasticsearch.common.unit.{ ByteSizeUnit, ByteSizeValue }
 
@@ -72,8 +73,18 @@ class SparkEsBulkWriter[T](
     }
   }
 
+  private[elasticsearch] def applyMappings(currentRow: T, indexRequest: IndexRequest): Unit = {
+    sparkEsMapper.extractMappingId(currentRow).foreach(indexRequest.id)
+    sparkEsMapper.extractMappingParent(currentRow).foreach(indexRequest.parent)
+    sparkEsMapper.extractMappingVersion(currentRow).foreach(indexRequest.version)
+    sparkEsMapper.extractMappingVersionType(currentRow).foreach(indexRequest.versionType)
+    sparkEsMapper.extractMappingRouting(currentRow).foreach(indexRequest.routing)
+    sparkEsMapper.extractMappingTTLInMillis(currentRow).foreach(indexRequest.ttl(_))
+    sparkEsMapper.extractMappingTimestamp(currentRow).foreach(indexRequest.timestamp)
+  }
+
   /**
-   * Writes T to Elasticsearch by establishing a TransportClient and BulkProcessor.
+   * Upserts T to Elasticsearch by establishing a TransportClient and BulkProcessor.
    *
    * @param taskContext The TaskContext provided by the Spark DAGScheduler.
    * @param data The set of T to persist.
@@ -82,19 +93,26 @@ class SparkEsBulkWriter[T](
     val esBulkProcessor = createBulkProcessor()
 
     for (currentRow <- data) {
-      val currentIndexRequest = new IndexRequest(esIndex, esType) source {
-        sparkEsSerializer.write(currentRow)
-      }
+      val currentIndexRequest = new IndexRequest(esIndex, esType)
+        .source(sparkEsSerializer.write(currentRow))
 
-      sparkEsMapper.extractMappingId(currentRow).foreach(currentIndexRequest.id)
-      sparkEsMapper.extractMappingParent(currentRow).foreach(currentIndexRequest.parent)
-      sparkEsMapper.extractMappingVersion(currentRow).foreach(currentIndexRequest.version)
-      sparkEsMapper.extractMappingVersionType(currentRow).foreach(currentIndexRequest.versionType)
-      sparkEsMapper.extractMappingRouting(currentRow).foreach(currentIndexRequest.routing)
-      sparkEsMapper.extractMappingTTLInMillis(currentRow).foreach(currentIndexRequest.ttl(_))
-      sparkEsMapper.extractMappingTimestamp(currentRow).foreach(currentIndexRequest.timestamp)
+      applyMappings(currentRow, currentIndexRequest)
 
-      esBulkProcessor.add(currentIndexRequest)
+      val currentId = currentIndexRequest.id()
+      val currentParent = currentIndexRequest.parent()
+      val currentVersion = currentIndexRequest.version()
+      val currentVersionType = currentIndexRequest.versionType()
+      val currentRouting = currentIndexRequest.routing()
+
+      val currentUpsertRequest = new UpdateRequest(esIndex, esType, currentId)
+        .parent(currentParent)
+        .version(currentVersion)
+        .versionType(currentVersionType)
+        .routing(currentRouting)
+        .doc(currentIndexRequest)
+        .docAsUpsert(true)
+
+      esBulkProcessor.add(currentUpsertRequest)
     }
 
     closeBulkProcessor(esBulkProcessor)

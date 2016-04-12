@@ -57,15 +57,16 @@ class SparkEsBulkWriterSpec extends WordSpec with MustMatchers with SharedSparkC
       val inputData = sc.parallelize {
         Array(
           Row("TEST_ID_1", "TEST_PARENT_1", 1L, "TEST_ROUTING_1", 86400000L, "TEST_TIMESTAMP_1", 1L),
-          Row("TEST_ID_2", "TEST_PARENT_1", 1L, "TEST_ROUTING_1", 86400000L, "TEST_TIMESTAMP_1", 1L),
-          Row("TEST_ID_3", "TEST_PARENT_1", 1L, "TEST_ROUTING_1", 86400000L, "TEST_TIMESTAMP_1", 1L),
-          Row("TEST_ID_4", "TEST_PARENT_1", 1L, "TEST_ROUTING_1", 86400000L, "TEST_TIMESTAMP_1", 1L),
-          Row("TEST_ID_5", "TEST_PARENT_1", 1L, "TEST_ROUTING_1", 86400000L, "TEST_TIMESTAMP_1", 1L),
-          Row("TEST_ID_6", "TEST_PARENT_1", 1L, "TEST_ROUTING_1", 86400000L, "TEST_TIMESTAMP_1", 1L),
-          Row("TEST_ID_7", "TEST_PARENT_1", 1L, "TEST_ROUTING_1", 86400000L, "TEST_TIMESTAMP_1", 1L),
-          Row("TEST_ID_8", "TEST_PARENT_1", 1L, "TEST_ROUTING_1", 86400000L, "TEST_TIMESTAMP_1", 1L),
-          Row("TEST_ID_9", "TEST_PARENT_1", 1L, "TEST_ROUTING_1", 86400000L, "TEST_TIMESTAMP_1", 1L),
-          Row("TEST_ID_10", "TEST_PARENT_1", 1L, "TEST_ROUTING_1", 86400000L, "TEST_TIMESTAMP_1", 1L)
+          Row("TEST_ID_1", "TEST_PARENT_2", 2L, "TEST_ROUTING_1", 86400000L, "TEST_TIMESTAMP_1", 2L),
+          Row("TEST_ID_1", "TEST_PARENT_3", 3L, "TEST_ROUTING_1", 86400000L, "TEST_TIMESTAMP_1", 3L),
+          Row("TEST_ID_1", "TEST_PARENT_4", 4L, "TEST_ROUTING_1", 86400000L, "TEST_TIMESTAMP_1", 4L),
+          Row("TEST_ID_1", "TEST_PARENT_5", 5L, "TEST_ROUTING_1", 86400000L, "TEST_TIMESTAMP_1", 5L),
+          Row("TEST_ID_5", "TEST_PARENT_6", 6L, "TEST_ROUTING_1", 86400000L, "TEST_TIMESTAMP_1", 6L),
+          Row("TEST_ID_6", "TEST_PARENT_7", 7L, "TEST_ROUTING_1", 86400000L, "TEST_TIMESTAMP_1", 7L),
+          Row("TEST_ID_7", "TEST_PARENT_8", 8L, "TEST_ROUTING_1", 86400000L, "TEST_TIMESTAMP_1", 8L),
+          Row("TEST_ID_8", "TEST_PARENT_9", 9L, "TEST_ROUTING_1", 86400000L, "TEST_TIMESTAMP_1", 9L),
+          Row("TEST_ID_9", "TEST_PARENT_10", 10L, "TEST_ROUTING_1", 86400000L, "TEST_TIMESTAMP_1", 10L),
+          Row("TEST_ID_10", "TEST_PARENT_11", 11L, "TEST_ROUTING_1", 86400000L, "TEST_TIMESTAMP_1", 11L)
         )
       }
       val inputDataFrame = sqlContext.createDataFrame(inputData, inputSchema)
@@ -84,12 +85,12 @@ class SparkEsBulkWriterSpec extends WordSpec with MustMatchers with SharedSparkC
       val outputGetResponse = esServer.client.prepareGet("test_index", "test_type", "TEST_ID_1").get()
 
       outputGetResponse.isExists mustEqual true
-      outputGetResponse.getSource.get("parent").asInstanceOf[String] mustEqual "TEST_PARENT_1"
-      outputGetResponse.getSource.get("version").asInstanceOf[Integer] mustEqual 1
+      outputGetResponse.getSource.get("parent").asInstanceOf[String] mustEqual "TEST_PARENT_5"
+      outputGetResponse.getSource.get("version").asInstanceOf[Integer] mustEqual 5
       outputGetResponse.getSource.get("routing").asInstanceOf[String] mustEqual "TEST_ROUTING_1"
       outputGetResponse.getSource.get("ttl").asInstanceOf[Integer] mustEqual 86400000
       outputGetResponse.getSource.get("timestamp").asInstanceOf[String] mustEqual "TEST_TIMESTAMP_1"
-      outputGetResponse.getSource.get("value").asInstanceOf[Integer] mustEqual 1
+      outputGetResponse.getSource.get("value").asInstanceOf[Integer] mustEqual 5
     }
   }
 }
