@@ -108,12 +108,12 @@ class SparkEsDataFrameSerializerSpec extends WordSpec with MustMatchers with Sha
 
       val inputBuilder9 = XContentFactory.jsonBuilder()
       val outputBuilder9 = inputSparkEsDataFrameSerializer.writePrimitive(TimestampType, new Timestamp(834120000000L), inputBuilder9)
-      outputBuilder9.string() must include("1996-06-07")
+      outputBuilder9.string() must include("834120000000")
       inputBuilder9.close()
 
       val inputBuilder10 = XContentFactory.jsonBuilder()
       val outputBuilder10 = inputSparkEsDataFrameSerializer.writePrimitive(DateType, new Date(834120000000L), inputBuilder10)
-      outputBuilder10.string() must include("1996-06-07")
+      outputBuilder10.string() must include("834120000000")
       inputBuilder10.close()
 
       val inputBuilder11 = XContentFactory.jsonBuilder()
