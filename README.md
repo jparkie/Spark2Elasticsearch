@@ -17,13 +17,13 @@ Spark2Elasticsearch supports Spark 1.4 and above.
 
 #### SBT
 ```scala
-libraryDependencies += "com.github.jparkie" %% "spark2elasticsearch" % "2.0.1"
+libraryDependencies += "com.github.jparkie" %% "spark2elasticsearch" % "2.0.2"
 ```
 
 Or:
 
 ```scala
-libraryDependencies += "com.github.jparkie" %% "spark2elasticsearch" % "2.1.1"
+libraryDependencies += "com.github.jparkie" %% "spark2elasticsearch" % "2.1.2"
 ```
 
 Add the following resolver if needed:
