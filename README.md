@@ -29,7 +29,7 @@ libraryDependencies += "com.github.jparkie" %% "spark2elasticsearch" % "2.1.2"
 Add the following resolver if needed:
 
 ```scala
-resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/releases"
+resolvers += "Sonatype OSS Releases" at "https://oss.sonatype.org/content/repositories/releases"
 resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 ```
 
@@ -38,7 +38,7 @@ resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repos
 <dependency>
   <groupId>com.github.jparkie</groupId>
   <artifactId>spark2elasticsearch_2.10</artifactId>
-  <version>2.0.0-SNAPSHOT</version>
+  <version>x.y.z-SNAPSHOT</version>
 </dependency>
 ```
 
